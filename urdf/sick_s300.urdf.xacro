@@ -74,7 +74,7 @@
 					</noise>
 				</ray>
 				<plugin name="${prefix}_controller" filename="libgazebo_ros_laser.so">
-					<topicName>${prefix_topic}/scan</topicName>
+					<topicName>${prefix_topic}/sick_s300/scan</topicName>
 					<frameName>/${prefix}_link</frameName><!-- if not global (leading /) sets the current namespace as a prefix (/ns/name_laser_link) -->
 				</plugin>
 			</sensor>
