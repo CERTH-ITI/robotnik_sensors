@@ -23,8 +23,7 @@
   <xacro:property name="r430_cam_depth_py" value="-0.0115"/>
   <xacro:property name="r430_cam_depth_pz" value="0.0"/>
 
-  <xacro:macro name="sensor_r430" params="prefix parent prefix_topic:='front_rgbd_camera' *origin">
-
+  <xacro:macro name="sensor_r430" params="prefix parent *origin">
     <!-- camera body, with origin at bottom screw mount -->
     <joint name="${prefix}_camera_joint" type="fixed">
       <xacro:insert_block name="origin" />
@@ -144,14 +143,14 @@
           </clip>
         </camera>
         <plugin name="${prefix}_controller" filename="libgazebo_ros_openni_kinect.so">
-          <cameraName>${prefix_topic}</cameraName>
+          <!-- <cameraName>${prefix_topic}</cameraName> -->
           <alwaysOn>true</alwaysOn>
           <updateRate>10</updateRate>
           <imageTopicName>${prefix}/rgb/image_raw</imageTopicName>
           <depthImageTopicName>${prefix}/depth/image_raw</depthImageTopicName>
           <pointCloudTopicName>${prefix}/depth/points</pointCloudTopicName>
           <cameraInfoTopicName>${prefix}/rgb/camera_info</cameraInfoTopicName>
-          <depthImageCameraInfoTopicName>${prefix}/depth/camera_info</depthImageCameraInfoTopicName>          
+          <depthImageCameraInfoTopicName>${prefix}/depth/camera_info</depthImageCameraInfoTopicName>
           <frameName>/${prefix}_camera_depth_optical_frame</frameName>
           <baseline>0.05</baseline>
           <distortion_k1>0.0</distortion_k1>
