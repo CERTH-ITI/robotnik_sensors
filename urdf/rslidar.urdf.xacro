@@ -1,18 +1,10 @@
 <?xml version="1.0"?>
-<robot name="sensor_benewake_ce30" xmlns:xacro="http://wiki.ros.org/xacro">
+<robot name="sensor_rslidar" xmlns:xacro="http://wiki.ros.org/xacro">
 
   <xacro:property name="M_PI" value="3.1415926535897931" />
 
-  <xacro:property name="ce30d_width" value="0.079"/>
-  <xacro:property name="ce30d_length" value="0.050"/>
-  <xacro:property name="ce30d_height" value="0.047"/>
+  <xacro:macro name="sensor_rslidar" params="prefix parent prefix_topic *origin range_min range_max hfov hres vfov vres fps gpu">
 
-  <xacro:property name="ce30d_depth_px" value="0.00"/>
-  <xacro:property name="ce30d_depth_py" value="-0.0115"/>
-  <xacro:property name="ce30d_depth_pz" value="0.0"/>
-
-
-  <xacro:macro name="sensor_benewake_ce30" params="prefix parent prefix_topic *origin range_min range_max hfov vfov fps gpu">
     <material name="black_alu">
       <color rgba="0.9 0.9 0.9 1"/>
     </material>
@@ -28,15 +20,14 @@
       <!-- origin xyz="0 0 0" rpy="0 0 1.5708"/ -->
       <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://robotnik_sensors/meshes/benewake_ce30.stl" />
-          <!--box size="${ce30d_length} ${ce30d_width} ${ce30d_height}"/-->
+          <mesh filename="package://robotnik_sensors/meshes/rslidar.stl" />
         </geometry>
         <material name="black_alu"/>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://robotnik_sensors/meshes/benewake_ce30.stl" />
+          <mesh filename="package://robotnik_sensors/meshes/rslidar.stl" />
         </geometry>
       </collision>
       <inertial>
@@ -49,22 +40,20 @@
 
     <joint name="${prefix}_joint" type="fixed">
       <parent link="${prefix}_base_link"/>
-      <!-- default ce30d_driver_ros configuration -->
       <child link="${prefix}_link" />
     </joint>
     <link name="${prefix}_link"/>
 
-  <sensor_benewake_ce30_gazebo range_min="${range_min}" range_max="${range_max}" hfov="${hfov}" vfov="${vfov}" fps="${fps}" gpu="${gpu}"/>
+  <sensor_rslidar_gazebo range_min="${range_min}" range_max="${range_max}" hfov="${hfov}" hres="${hres}" vfov="${vfov}" vres="${vres}" fps="${fps}" gpu="${gpu}"/>
 
   </xacro:macro>
 
-  <xacro:macro name="sensor_benewake_ce30_gazebo" params="range_min range_max hfov vfov fps gpu">
+  <xacro:macro name="sensor_rslidar_gazebo" params="range_min range_max hfov hres vfov vres fps gpu">
     <gazebo reference="${prefix}_link">
       <xacro:if value="${gpu}">
         <!-- Using GPU needs: https://github.com/RobotnikAutomation/velodyne_simulator -->
         <xacro:property name="ray_type" value="gpu_ray" />
         <xacro:property name="plugin_lib" value="libgazebo_ros_velodyne_gpu_laser.so" />
-
       </xacro:if>
       <xacro:unless value="${gpu}">
         <xacro:property name="ray_type" value="ray" />
@@ -78,12 +67,12 @@
             <scan>
               <horizontal>
 				<!-- for a high quality simulation -->
-                <samples>320</samples>
+                <samples>${hfov/hres}</samples>
                 <min_angle>-${hfov/2.0*M_PI/180.0}</min_angle>
                 <max_angle>${hfov/2.0*M_PI/180.0}</max_angle>
               </horizontal>
               <vertical>
-                <samples>20</samples>
+                <samples>${vfov/vres}</samples>
                 <min_angle>-${vfov/2.0*M_PI/180.0}</min_angle>
                 <max_angle>${vfov/2.0*M_PI/180.0}</max_angle>
               </vertical>
@@ -107,21 +96,21 @@
 
   </xacro:macro>
 
-  <xacro:macro name="sensor_benewake_ce30a" params="prefix parent prefix_topic:='lidar_3d' *origin gpu:=false">
-    <sensor_benewake_ce30 prefix="${prefix}" parent="${parent}" prefix_topic="${prefix_topic}" range_min="0.1" range_max="4.0" hfov="132.0" vfov="9.0" fps="20.0" gpu="${gpu}" >
+  <xacro:macro name="sensor_rslidar_16" params="prefix parent prefix_topic:='lidar_3d' *origin gpu:=false">
+    <sensor_rslidar prefix="${prefix}" parent="${parent}" prefix_topic="${prefix_topic}" range_min="0.4" range_max="150.0" hfov="360.0" hres="0.1" vfov="30.0" vres="2.0" fps="20.0" gpu="${gpu}" >
       <xacro:insert_block name="origin" />
-    </sensor_benewake_ce30>
+    </sensor_rslidar>
   </xacro:macro>
 
-  <xacro:macro name="sensor_benewake_ce30c" params="prefix parent prefix_topic:='lidar_3d' *origin gpu:=false">
-    <sensor_benewake_ce30 prefix="${prefix}" parent="${parent}" prefix_topic="${prefix_topic}" range_min="0.1" range_max="4.0" hfov="132.0" vfov="9.0" fps="20.0" gpu="${gpu}" >
+  <xacro:macro name="sensor_rslidar_32" params="prefix parent prefix_topic:='lidar_3d' *origin gpu:=false">
+    <sensor_rslidar prefix="${prefix}" parent="${parent}" prefix_topic="${prefix_topic}" range_min="0.4" range_max="200.0" hfov="360.0" hres="0.1" vfov="40.0" vres="0.33" fps="20.0" gpu="${gpu}" >
       <xacro:insert_block name="origin" />
-    </sensor_benewake_ce30>
+    </sensor_rslidar>
   </xacro:macro>
 
-  <xacro:macro name="sensor_benewake_ce30d" params="prefix parent prefix_topic:='lidar_3d' *origin gpu:=false">
-    <sensor_benewake_ce30 prefix="${prefix}" parent="${parent}" prefix_topic="${prefix_topic}" range_min="0.4" range_max="28.0" hfov="60.0" vfov="20.0" fps="30.0" gpu="${gpu}" >
+  <xacro:macro name="sensor_rslidar_ruby" params="prefix parent prefix_topic:='lidar_3d' *origin gpu:=false">
+    <sensor_rslidar prefix="${prefix}" parent="${parent}" prefix_topic="${prefix_topic}" range_min="0.4" range_max="250.0" hfov="360.0" hres="0.1" vfov="40.0" vres="0.1" fps="20.0" gpu="${gpu}" >
       <xacro:insert_block name="origin" />
-    </sensor_benewake_ce30>
+    </sensor_rslidar>
   </xacro:macro>
 </robot>

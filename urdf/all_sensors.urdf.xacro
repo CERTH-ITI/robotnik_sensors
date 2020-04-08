@@ -91,6 +91,9 @@
   <!-- Pointgrey Bumblebee -->
   <xacro:include filename="$(find robotnik_sensors)/urdf/pointgrey_bumblebee2.urdf.xacro" />
 
+  <!-- Intel Realsense R430 -->
+  <xacro:include filename="$(find robotnik_sensors)/urdf/intel_r430.urdf.xacro" />
+
   <!-- Intel Realsense D435 -->
   <xacro:include filename="$(find robotnik_sensors)/urdf/intel_d435.urdf.xacro" />
 
@@ -108,4 +111,7 @@
 
   <!-- Rubedos Viper -->
   <xacro:include filename="$(find robotnik_sensors)/urdf/rubedos_viper.urdf.xacro" />
+
+  <!-- RoboSense RS-Lidar -->
+  <xacro:include filename="$(find robotnik_sensors)/urdf/rslidar.urdf.xacro" />
 </robot>
