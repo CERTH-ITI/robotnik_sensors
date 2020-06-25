@@ -174,7 +174,7 @@ Copyright(c) 2020 Robotnik Automation. All Rights Reserved
        </camera>
        <always_on>1</always_on>
        <update_rate>30</update_rate>
-       <visualize>1</visualize>
+       <visualize>0</visualize>
      </sensor>
      <sensor name="${camera_name}ired1" type="camera">
        <camera name="${camera_name}">
@@ -263,7 +263,7 @@ Copyright(c) 2020 Robotnik Automation. All Rights Reserved
        <infrared2OpticalframeName>${infrared2_optical_frame}</infrared2OpticalframeName>
        <rangeMinDepth>0.2</rangeMinDepth>
        <rangeMaxDepth>10.0</rangeMaxDepth>
-       <pointCloud>false</pointCloud>
+       <pointCloud>true</pointCloud>
        <pointCloudTopicName>depth/points</pointCloudTopicName>
        <pointCloudCutoff>0.5</pointCloudCutoff>
      </plugin>
