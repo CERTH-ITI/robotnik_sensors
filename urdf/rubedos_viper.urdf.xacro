@@ -79,7 +79,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <box size="${rubedos_viper_depth} ${rubedos_viper_height} ${rubedos_viper_width}"/>
+          <box size="${rubedos_viper_depth} ${rubedos_viper_width} ${rubedos_viper_height}"/>
           <!--<mesh filename="package://pointgrey_camera_description/meshes/rubedos_viper.dae"/>-->
         </geometry>
       </visual>
